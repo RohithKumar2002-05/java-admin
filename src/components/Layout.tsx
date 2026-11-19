@@ -21,6 +21,7 @@ function NavContent({ admin, onNav, onLogout }: {
     onNav?: () => void;
     onLogout: () => void;
 }) {
+    const nav = NAV.filter(({ to }) => to !== '/settings' || admin?.role === 'SUPER_ADMIN');
     return (
         <>
             <div className="flex items-center gap-3 px-6 py-6">
@@ -33,7 +34,7 @@ function NavContent({ admin, onNav, onLogout }: {
             <p className="px-6 text-[10px] font-semibold uppercase tracking-widest text-[#4a7a4a] mb-2">Menu</p>
 
             <nav className="flex flex-col gap-1 px-3">
-                {NAV.map(({ to, label, Icon, end }) => (
+                {nav.map(({ to, label, Icon, end }) => (
                     <NavLink
                         key={to} to={to} end={end}
                         onClick={onNav}
