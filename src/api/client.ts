@@ -17,12 +17,14 @@ export const req = async (url: string, options: RequestInit = {}) => {
         ...options.headers,
     };
     const res = await fetch(`${BASE}${url}`, options);
+    const json = await res.json().catch(() => ({ message: `Request failed (${res.status})` }));
     if (res.status === 401) {
         localStorage.removeItem('admin_token');
-        window.location.href = '/login';
-        throw new Error('Unauthorized');
+        if (!window.location.pathname.includes('/login')) {
+            window.location.href = '/login';
+        }
+        throw json;
     }
-    const json = await res.json();
     if (!res.ok) throw json;
     return json;
 };
