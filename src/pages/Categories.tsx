@@ -66,7 +66,7 @@ export default function Categories() {
             await createCategoryApi(fd);
             setSuccess(`Category "${catForm.name}" created`);
             closeForm(); await load();
-        } catch (err: any) { setError(err?.data?.message || 'Failed to create category'); }
+        } catch (err: any) { setError(err?.message || 'Failed to create category'); }
         finally { setSubmitting(false); }
     };
 
